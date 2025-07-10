@@ -55,7 +55,6 @@ if "show_prediction" not in st.session_state:
 
         submitted = st.form_submit_button("Submit")
 
-        print("zip_code", zip_code)
         if submitted:
             data_dict = {
                 "area": area,
@@ -76,8 +75,11 @@ if "show_prediction" not in st.session_state:
                 "terrace": terrace,
                 "garden": garden,
             }
-            print("data_dict:", data_dict)
             try:
+                if zip_code == '':
+                    raise ValueError(
+            "Zip code can't be empty. Please provide a valid Belgian postal code."
+        )
                 pre_processed_data = pre_process_data(data_dict)
                 prediction = predict_price(pre_processed_data)
                 show_prediction(prediction)
